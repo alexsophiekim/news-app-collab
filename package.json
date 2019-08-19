@@ -1,0 +1,27 @@
+{
+  "name": "news-app-collab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexsophiekim/news-app-collab.git"
+  },
+  "keywords": [
+    "javascript",
+    "html",
+    "css",
+    "bootstrap",
+    "grunt"
+  ],
+  "author": "John and Sophie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexsophiekim/news-app-collab/issues"
+  },
+  "homepage": "https://github.com/alexsophiekim/news-app-collab#readme",
+  "dependencies": {}
+}
