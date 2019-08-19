@@ -3,7 +3,12 @@ module.exports = function(grunt) {
 
 // grunt configs
         grunt.initConfig({
-
+          jshint: {
+              files: ['js/*.js', 'js/!*.min.js'],
+              options: {
+                  esversion: 6
+              }
+          },
 // SOPHIE STUFF HERE
 ///////////////////////////////////
 // JOHN STUFF HERE
@@ -11,7 +16,8 @@ module.exports = function(grunt) {
         });
 
         // load plugins here
-
+        grunt.loadNpmTasks('grunt-contrib-jshint');
 
         // register tasks here
+        grunt.registerTask('checkJS', ['jshint']);
 }
