@@ -23,5 +23,8 @@
     "url": "https://github.com/alexsophiekim/news-app-collab/issues"
   },
   "homepage": "https://github.com/alexsophiekim/news-app-collab#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.4"
+  }
 }
