@@ -23,5 +23,9 @@
     "url": "https://github.com/alexsophiekim/news-app-collab/issues"
   },
   "homepage": "https://github.com/alexsophiekim/news-app-collab#readme",
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
+  }
 }
