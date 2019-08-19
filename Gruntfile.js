@@ -18,6 +18,13 @@ module.exports = function(grunt) {
                   }
                 }
              },
+             sass: {
+               dist: {
+                 files: {
+                   'css/style.css': 'scss/style.scss'
+                 }
+               }
+             },
             csslint: {
               strict: {
                 options: {
@@ -43,8 +50,9 @@ module.exports = function(grunt) {
                 }]
               }
             }
+        });
         // load plugins here
-        // ADD SASS
+        grunt.loadNpmTasks('grunt-contrib-sass');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-contrib-uglify-es');
         grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -52,7 +60,7 @@ module.exports = function(grunt) {
         // ADD WATCH
 
         // register tasks here
-        // ADD SASS
+        grunt.registerTask('compile', ['sass']);
         grunt.registerTask('checkJS', ['jshint']);
         grunt.registerTask('minifyJS',['uglify']);
         grunt.registerTask('lintCSS', ['csslint']);
@@ -60,6 +68,4 @@ module.exports = function(grunt) {
         // combining two tasks in one
         grunt.registerTask('lintMinCSS', ['csslint', 'cssmin']);
         // ADD WATCH
-
-        });
 }
