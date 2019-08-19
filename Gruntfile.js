@@ -23,7 +23,22 @@ module.exports = function(grunt) {
                  files: {
                    'css/style.css': 'scss/style.scss'
                  }
-               }
+             },
+             watch: {
+               scripts: {
+                 files: 'js/*.js',
+                 tasks: ['jshint', 'uglify'],
+                 options: {
+                   interrupt: true,
+                 },
+               },
+               styles: {
+                 files: 'scss/style.scss',
+                 tasks: ['sass', 'csslint', 'cssmin'],
+                 options: {
+                   interrupt: true,
+                 },
+               },
              },
             csslint: {
               strict: {
@@ -57,15 +72,16 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-uglify-es');
         grunt.loadNpmTasks('grunt-contrib-csslint');
         grunt.loadNpmTasks('grunt-contrib-cssmin');
-        // ADD WATCH
+        grunt.loadNpmTasks('grunt-contrib-watch');
 
         // register tasks here
         grunt.registerTask('compile', ['sass']);
         grunt.registerTask('checkJS', ['jshint']);
         grunt.registerTask('minifyJS',['uglify']);
+        grunt.registerTask('compile', ['sass']);
         grunt.registerTask('lintCSS', ['csslint']);
         grunt.registerTask('minCSS', ['cssmin']);
         // combining two tasks in one
         grunt.registerTask('lintMinCSS', ['csslint', 'cssmin']);
-        // ADD WATCH
+        grunt.registerTask('doWatch', ['watch']);
 }
