@@ -4,45 +4,62 @@ module.exports = function(grunt) {
 // grunt configs
 
 
-// SOPHIE STUFF HERE
-///////////////////////////////////
-// JOHN STUFF HERE
-    grunt.initConfig({
-        csslint: {
-          strict: {
-            options: {
-              import: 2
-            },
-            src: ['css/*.css']
+        grunt.initConfig({
+          jshint: {
+              files: ['js/*.js', 'js/!*.min.js'],
+              options: {
+                  esversion: 6
+              }
           },
-          lax: {
-            options: {
-              import: false
+            uglify: {
+                my_target: {
+                  files: {
+                    'js/script.min.js': ['js/script.js']
+                  }
+                }
+             },
+            csslint: {
+              strict: {
+                options: {
+                  import: 2
+                },
+                src: ['css/*.css']
+              },
+              lax: {
+                options: {
+                  import: false
+                },
+                src: ['css/*.css']
+              }
             },
-            src: ['css/*.css']
-          }
-        },
-        cssmin: {
-          target: {
-            files: [{
-              expand: true,
-              cwd: 'css/',
-              src: ['*.css', '!*.min.css'],
-              dest: 'css/',
-              ext: '.min.css'
-            }]
-          }
-        }
-    });
+            cssmin: {
+              target: {
+                files: [{
+                  expand: true,
+                  cwd: 'css/',
+                  src: ['*.css', '!*.min.css'],
+                  dest: 'css/',
+                  ext: '.min.css'
+                }]
+              }
+            }
+        // load plugins here
+        // ADD SASS
+        grunt.loadNpmTasks('grunt-contrib-jshint');
+        grunt.loadNpmTasks('grunt-contrib-uglify-es');
+        grunt.loadNpmTasks('grunt-contrib-csslint');
+        grunt.loadNpmTasks('grunt-contrib-cssmin');
+        // ADD WATCH
 
-    // load plugins here
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
+        // register tasks here
+        // ADD SASS
+        grunt.registerTask('checkJS', ['jshint']);
+        grunt.registerTask('minifyJS',['uglify']);
+        grunt.registerTask('lintCSS', ['csslint']);
+        grunt.registerTask('minCSS', ['cssmin']);
+        // combining two tasks in one
+        grunt.registerTask('lintMinCSS', ['csslint', 'cssmin']);
+        // ADD WATCH
 
-
-    // register tasks here
-    grunt.registerTask('lintCSS', ['csslint']);
-    grunt.registerTask('minCSS', ['cssmin']);
-    // combining two tasks in one
-    grunt.registerTask('checkCSS', ['csslint', 'cssmin']);
+        });
 }
