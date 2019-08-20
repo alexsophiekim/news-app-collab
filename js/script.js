@@ -5,11 +5,12 @@ $(document).ready(function(){
   const worldNewsBtn = $("#worldNewsBtn");
 
   $.ajax({
-    url: '../confing.json',
+    url: 'config.json',
     type: 'GET',
     dataType: 'json',
-    success: function(apiKey){
-      newsApiKey = key['newsApiKey'];
+    success: function(keys){
+      newsApiKey = keys['newsApiKey'];
+      console.log(newsApiKey);
       getNzData();
     },
     error: function(){
@@ -51,6 +52,7 @@ $(document).ready(function(){
 
   $("#nzNewsBtn").click(function(){
     console.log('clicked');
+    newsList.append();
   });
 
 });
