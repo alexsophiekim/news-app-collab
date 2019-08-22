@@ -1,58 +1,113 @@
-$(document).ready(function(){
 
-  const newsList = $("#newsList");
-  const nzNewsBtn = $("#nzNewsBtn");
-  const worldNewsBtn = $("#worldNewsBtn");
-
-  $.ajax({
-    url: 'config.json',
-    type: 'GET',
-    dataType: 'json',
-    success: function(keys){
-      newsApiKey = keys['newsApiKey'];
-      console.log(newsApiKey);
-      getNzData();
-    },
-    error: function(){
-      console.log('Something went wrong');
-    }
-  });
-
-  function getNzData() {
+let newsBox = document.getElementById('NewsBox');
+// On click, pull local (NZ) news headlines
+$('#localButton').click(function(){
+ console.log('local button clicked');
+    var key;
     $.ajax({
-      url: `https://newsapi.org/v2/top-headlines?country=nz&apiKey=${newsApiKey}`,
-      type: 'GET',
-      dataType: 'json',
-      success: function(dataFromNewsApi){
-        console.log(dataFromNewsApi);
-        newsList.empty();
-        if (dataFromNewsApi.articles.length === 0) {
-          newsList.append(`NO NEWS`);
-        } else {
-          let layout =
-          `<div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <img class="card-img-top" data-src="${articles.urlToImage}" alt="Card image cap">
-              <div class="card-body">
-                <p class="card-text">${articles.title}</p>
-                <p class ="card-text">${articles.description}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                </div>
-              </div>
-            </div>
-          </div>`;
-          dataFromNewsApi.append(layout);
+        url: "config.json",
+        dataType: "json",
+        type: "GET",
+        success:function(data){
+            key = data.NEWS_API_KEY; //key from config.json
+            getData(key);
+        },
+        error:function(error){
+            console.log("ERROR");
+            console.log(error);
         }
-      },
-      error: function(){
-        console.log('Something went wrong');
-      }
     });
-  };
+    function getData(key){
+        $.ajax({
+            url: 'https://newsapi.org/v2/top-headlines?' +
+              'country=nz&' +
+              'pageSize=12&' +
+              'apiKey=' + key,
+            dataType: "json",
+            type: "GET",
+            success:function(newsData){
+                dataJSON = newsData;
+                console.log(dataJSON);
+                // console.log(newsData.articles.length);
+                for (var i = 0; i < newsData.articles.length; i++) {
+                    newsBox.innerHTML +=
+                    `<div class="col-md-4">
+                      <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="${newsData.articles[i].urlToImage}" alt="Card image cap">
+                        <div class="card-body">
+                          <p class="card-text">${newsData.articles[i].title}</p>
+                          <p>${newsData.articles[i].description}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <a href="${newsData.articles[i].url}" class="btn btn-secondary">Read more</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>`;
+                }
+            },
+            error:function(error){
+                console.log("Error");
+            }
 
-  $("#nzNewsBtn").click(function(){
-    console.log('clicked');
-    newsList.append();
-  });
+        });
+
+    }
 
 });
+
+// On click, pull world headlines
+$('#worldButton').click(function(){
+
+    var key;
+    $.ajax({
+        url: "config.json",
+        dataType: "json",
+        type: "GET",
+        success:function(data){
+            key = data[0].NEWS_API_KEY; //key from config.json
+            console.log(key);
+            getData(key);
+        },
+        error:function(error){
+            console.log("ERROR");
+            console.log(error);
+        }
+    });
+    function getData(key){
+        // console.log(key);
+        $.ajax({
+            url: 'https://newsapi.org/v2/top-headlines?' +
+              'language=en&' +
+              'pageSize=12&' +
+              'apiKey=' + key,
+            dataType: "json",
+            type: "GET",
+            success:function(newsData){
+                dataJSON = newsData;
+                console.log(dataJSON);
+                // console.log(newsData.articles.length);
+                for (var i = 0; i < newsData.articles.length; i++) {
+                    newsBox.innerHTML +=
+                    `<div class="col-md-4">
+                      <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="${newsData.articles[i].urlToImage}" alt="Card image cap">
+                        <div class="card-body">
+                          <p class="card-text">${newsData.articles[i].title}</p>
+                          <p>${newsData.articles[i].description}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <a href="${newsData.articles[i].url}" class="btn btn-secondary">Read more</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>`;
+                }
+            },
+            error:function(error){
+                console.log("Error");
+            }
+
+        });
+
+    }
+
+})
